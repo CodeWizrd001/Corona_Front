@@ -15,11 +15,24 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+
+  var u = User(
+    uname: "Corona",
+    umail: "corona@virus",
+    uin: "CV",
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
-      home: Greet(),
+      home: //Greet() ,
+       MyApp(
+        uri: "192.168.1.36",
+        port: "10000",
+        user: u ,
+      ) ,
     );
   }
 }
@@ -83,7 +96,7 @@ class _MyAppState extends State<MyApp> {
                 },
               ),
               RaisedButton(
-                child: Text("Send"),
+                child: Text("Search"),
                 onPressed: () {
                   print("Pressed");
                   return Navigator.of(context).push(
@@ -102,7 +115,10 @@ class _MyAppState extends State<MyApp> {
                   print("Pressed");
                   return Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => Map(),
+                      builder: (BuildContext context) => Map(
+                        uri: uri,
+                        port: port,
+                      ),
                     ),
                   );
                 },

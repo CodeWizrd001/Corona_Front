@@ -25,15 +25,15 @@ class Country {
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
-      cName: json['CountryName'],
-      tCases: json['TotalCases'] as int ,
-      nCases: json['NewCases'] as int ,
-      tDeaths: json['TotalDeaths'] as int ,
-      nDeaths: json['NewDeaths'] as int ,
-      tRec: json['TotalRecovered'] as int ,
-      aCases: json['ActiveCases'] as int ,
-      sCrit: json['SeriousCritical'] as int ,
-      tCm: json['CasesPM'] as double ,
+      cName: json['CountryName'] as String,
+      tCases: json['TotalCases'] as int,
+      nCases: json['NewCases'] as int,
+      tDeaths: json['TotalDeaths'] as int,
+      nDeaths: json['NewDeaths'] as int,
+      tRec: json['TotalRecovered'] as int,
+      aCases: json['ActiveCases'] as int,
+      sCrit: json['SeriousCritical'] as int,
+      tCm: json['CasesPM'] as double,
       tDm: json['DeathPM'] as double,
     );
   }
@@ -85,17 +85,29 @@ class User {
 class CountryList {
   final List<Country> list;
   final int len;
+  final double max;
+  final double min;
+  final double scale;
 
-  CountryList({this.list, this.len});
+  CountryList({
+    this.list,
+    this.len,
+    this.max,
+    this.min,
+    this.scale,
+  });
 
   int get length {
-    print("Entered Get");
     return len;
   }
 
   factory CountryList.fromJson(Map<String, dynamic> json) {
     var t = json['data'];
+
     int x = t.length;
+    double y = json['max'];
+    double w = json['min'];
+    double sc = 255 / y;
     List<Country> z = [];
     print("List Length $x");
     for (int i = 0; i < x; i += 1) {
@@ -103,6 +115,12 @@ class CountryList {
       var temp = Country.fromJson(tmp);
       z.add(temp);
     }
-    return CountryList(list: z, len: x);
+    return CountryList(
+      list: z,
+      len: x,
+      min: w,
+      max: y,
+      scale: sc,
+    );
   }
 }
